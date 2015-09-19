@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Digger
 {
-    class Terrain : ICreature
+    class Brick : ICreature
     {
         public string GetImageFileName()
         {
-            return "Terrain.png";
+            return "brick.png";
         }
 
         public int GetDrawingPriority()

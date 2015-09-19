@@ -11,23 +11,27 @@ namespace Digger
 {
 	public class DiggerWindow : Form
     {
+        const int MessagesWidth = 200;
         const int ElementSize = 32;
         Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         static List<CreatureAnimation> animations = new List<CreatureAnimation>();
         Map map;
+
+        
         
 
         public DiggerWindow(Map map)
         {
             this.map = map;
-            ClientSize = new Size(ElementSize * map.Width, ElementSize * map.Height + ElementSize);
+            ClientSize = new Size(ElementSize * map.Width + MessagesWidth, ElementSize * map.Height);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Text = "Digger";
             DoubleBuffered = true;
 
-            var imagesDirectory = new DirectoryInfo("Images");
-            foreach(var e in imagesDirectory.GetFiles("*.png"))
-                bitmaps[e.Name]=(Bitmap)Bitmap.FromFile(e.FullName);
+            var imagesDirectory = new DirectoryInfo("..\\..\\Images");
+            foreach(var e in imagesDirectory.GetFiles())
+                if (e.Extension==".png")
+                 bitmaps[e.Name.ToLower()]=(Bitmap)Bitmap.FromFile(e.FullName);
             var timer = new Timer();
             timer.Interval = 1;
             timer.Tick += TimerTick;
@@ -42,7 +46,11 @@ namespace Digger
                 {
                     var creature = map[x, y];
                     if (creature == null) continue;
-                    var command = creature.Act(map,x,y);
+                    CreatureCommand command;
+                    if (!map.GameOver)
+                        command = creature.Act(map, x, y);
+                    else
+                        command = new CreatureCommand { DeltaX = 0, DeltaY = 0, TransformTo = null };
                     animations.Add(new CreatureAnimation
                     {
                         Command=command,
@@ -55,11 +63,21 @@ namespace Digger
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.TranslateTransform(0,ElementSize);
             e.Graphics.FillRectangle(Brushes.Black,0,0,ElementSize*map.Width,ElementSize*map.Height);
             foreach(var a in animations)
-                e.Graphics.DrawImage(bitmaps[a.Creature.GetImageFileName()],a.Location);
+            {
+                var name = a.Creature.GetImageFileName().ToLower();
+                if (!bitmaps.ContainsKey(name))
+                    Console.WriteLine();
+                var bmp=bitmaps[name];
+                e.Graphics.DrawImage(bmp,a.Location);
+            }
+                
             e.Graphics.ResetTransform();
+
+            e.Graphics.TranslateTransform(ElementSize*map.Width,0);
+            var messages = map.AllMessages.Aggregate((a, b) => a + "\r\n\r\n" + b);
+            e.Graphics.DrawString(messages, new Font("Courier", 12), Brushes.Black, new Rectangle(0, 0, MessagesWidth, ClientSize.Width));
         }
 
         int tickCount = 0;

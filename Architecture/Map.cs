@@ -24,12 +24,26 @@ namespace Digger
 
         public string Description { get; set; }
 
+        public bool GameOver { get; set; }
+
+        public List<string> Messages { get; private set; }
+
+        public IEnumerable<string> AllMessages
+        {
+            get
+            {
+                yield return Description;
+                foreach (var e in Messages) yield return e;
+            }
+        }
+
         public Action<DiggerWindow> Solution { get; set; }
 
        public Map(int width, int height)
        {
             Elements = new ICreature[width, height];
             Player = new Player();
+            Messages = new List<string>();
        }
 
     }

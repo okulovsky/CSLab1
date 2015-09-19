@@ -12,7 +12,7 @@ namespace Digger
         
         public string GetImageFileName()
         {
-            return "Monster.png";
+            return "digger.png";
         }
 
         public int GetDrawingPriority()
@@ -33,6 +33,15 @@ namespace Digger
             }
             if (nx < 0 || nx >= map.Width) nx = x;
             if (ny < 0 || ny >= map.Height) ny = y;
+
+            if (map[nx,ny] is Brick)
+            {
+                map.Messages.Add("Вы расшиблись о стену");
+                map.GameOver = true;
+            }
+
+
+
             return new CreatureCommand { DeltaX = nx - x, DeltaY = ny - y, TransformTo = null };
         }
 

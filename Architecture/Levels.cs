@@ -8,38 +8,11 @@ namespace Digger
 {
     class Levels
     {
-        public static Map TestLevel()
-        {
-            var Map = new Map(20, 20);
-            for (int x = 0; x < Map.Width; x++)
-                for (int y = 0; y < Map.Height; y++)
-                    Map[x, y] = new Terrain();
-            Map[0, 0] = Map.Player;
 
-            return Map;
-        }
-
-        static Map FramedMap(int width, int height)
-        {
-            var map = new Map(width,height);
-            for (int x = 0; x < map.Width; x++)
-            {
-                map[x, 0] = new Terrain();
-                map[x, map.Height - 1] = new Terrain();
-            }
-            for (int y = 0; y < map.Height; y++)
-            {
-                map[0, y] = new Terrain();
-                map[map.Width - 1, y] = new Terrain();
-            }
-            return map;
-        }
 
         public static Map Level1()
         {
-            var map = FramedMap(20, 15);
-            map[1, 1] = map.Player;
-            map.Description = "Размер этой карты - 20 элементов в ширину, 15 в высоту";
+            var map = new MapConstructor(20, 15, "Ширина этой карты - 20 элементов, высота - 15").Frame().PlayFrom(1, 1).Map;
             map.Solution = wnd =>
                 {
                     for (int x = 0; x < 20 - 2 - 1; x++) wnd.Go(Directions.Right);
@@ -47,5 +20,24 @@ namespace Digger
                 };
             return map;
         }
+
+        public static Map Level2()
+        {
+            var map = new MapConstructor(5, 4, "Ширина карты - 17, высота - 12").Fill().PlayFrom(1, 1);
+            for (int i = 0; i < 1; i++)
+                map = map.Dig(Directions.Right, 2).Dig(Directions.Down, 1);
+            
+            map.Map.Solution = wnd =>
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        for (int j = 0; j < 3; j++) wnd.Go(Directions.Right);
+                        for (int j = 0; j < 2; j++) wnd.Go(Directions.Down);
+                    }
+                };
+
+            return map.Map;
+        }
+
     }
 }
