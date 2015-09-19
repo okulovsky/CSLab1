@@ -109,5 +109,11 @@ namespace Digger
             turnOver = false;
             map.Player.RequestedMovement = Directions.None;
         }
+
+        public void Autocheck()
+        {
+            if (map.Solution!=null)
+                map.Solution.BeginInvoke(this, null, null);
+        }
     }
 }

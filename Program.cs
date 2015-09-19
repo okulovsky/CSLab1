@@ -26,9 +26,9 @@ namespace Digger
         [STAThread]
         static void Main()
         {
-            map = Levels.TestLevel();
+            map = Levels.Level1();
             wnd = new DiggerWindow(map);
-            new Action(Action).BeginInvoke(null, null);
+            wnd.Autocheck();
             Application.Run(wnd);
         }
     }

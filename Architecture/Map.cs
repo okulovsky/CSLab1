@@ -22,6 +22,10 @@ namespace Digger
 
         public Player Player { get; private set;  }
 
+        public string Description { get; set; }
+
+        public Action<DiggerWindow> Solution { get; set; }
+
        public Map(int width, int height)
        {
             Elements = new ICreature[width, height];

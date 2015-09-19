@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Architecture\CreatureCommand.cs" />
     <Compile Include="Architecture\Directions.cs" />
-    <Compile Include="Architecture\Game.cs" />
+    <Compile Include="Architecture\Map.cs" />
     <Compile Include="Architecture\ICreature.cs" />
     <Compile Include="Architecture\Levels.cs" />
     <Compile Include="Architecture\CreatureAnimation.cs" />
