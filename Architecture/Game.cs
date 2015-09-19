@@ -19,11 +19,14 @@ namespace Digger
             get { return Elements[x, y]; }
             set { Elements[x, y] = value; }
         }
-        
+
+        public Player Player { get; private set;  }
+
        public Map(int width, int height)
-        {
+       {
             Elements = new ICreature[width, height];
-        }
+            Player = new Player();
+       }
 
     }
 }

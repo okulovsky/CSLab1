@@ -14,9 +14,11 @@ namespace Digger
             for (int x = 0; x < Map.Width; x++)
                 for (int y = 0; y < Map.Height; y++)
                     Map[x, y] = new Terrain();
-            Map[0, 0] = new Player();
+            Map[0, 0] = Map.Player;
 
             return Map;
         }
+
+
     }
 }

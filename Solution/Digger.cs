@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Digger
 {
-    class Player : ICreature
+    class DiggerCreature : ICreature
     {
 
         public string GetImageFileName()
@@ -21,7 +21,7 @@ namespace Digger
         }
 
 
-        public CreatureCommand Act(int x, int y)
+        public CreatureCommand Act(Map map,int x, int y)
         {
             var cmd= new CreatureCommand();
             if (Keyboard.IsKeyDown(Key.Up)) cmd.DeltaY = -1; 

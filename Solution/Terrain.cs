@@ -17,7 +17,7 @@ namespace Digger
         {
             return 3;
         }
-        public CreatureCommand Act(int x, int y)
+        public CreatureCommand Act(Map map, int x, int y)
         {
             return new CreatureCommand
             {

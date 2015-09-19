@@ -10,7 +10,7 @@ namespace Digger
     {
         string GetImageFileName();
         int GetDrawingPriority();
-        CreatureCommand Act(int x, int y);
+        CreatureCommand Act(Map map, int x, int y);
         bool DeadInConflict(ICreature conflictedObject);
     }
 }

@@ -9,11 +9,27 @@ namespace Digger
 {
     static class Program
     {
+        static Map map;
+        static DiggerWindow wnd;
+
+        static void Action()
+        {
+            wnd.Go(Directions.Right);
+            wnd.Go(Directions.Right);
+            wnd.Go(Directions.Right);
+            wnd.Go(Directions.Down);
+            wnd.Go(Directions.Down);
+            wnd.Go(Directions.Down);
+            wnd.Go(Directions.Down);
+        }
+
         [STAThread]
         static void Main()
         {
-            var map = Levels.TestLevel();
-            Application.Run(new DiggerWindow(map));
+            map = Levels.TestLevel();
+            wnd = new DiggerWindow(map);
+            new Action(Action).BeginInvoke(null, null);
+            Application.Run(wnd);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Digger
         Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         static List<CreatureAnimation> animations = new List<CreatureAnimation>();
         Map map;
+        
 
         public DiggerWindow(Map map)
         {
@@ -41,7 +42,7 @@ namespace Digger
                 {
                     var creature = map[x, y];
                     if (creature == null) continue;
-                    var command = creature.Act(x,y);
+                    var command = creature.Act(map,x,y);
                     animations.Add(new CreatureAnimation
                     {
                         Command=command,
@@ -88,12 +89,25 @@ namespace Digger
                         else if (!newDead && !oldDead)
                             throw new Exception(string.Format("Существа {0} и {1} претендуют на один и тот же участок карты", nextCreature.GetType().Name, map[x, y].GetType().Name));
                     }
-
                 }
             }
             tickCount++;
-            if (tickCount == 8) tickCount = 0;
+            if (tickCount == 8)
+            {
+                tickCount = 0;
+                turnOver = true;
+            }
             Invalidate();
+        }
+
+        bool turnOver = false;
+      
+        public void Go(Directions direction)
+        {
+            map.Player.RequestedMovement = direction;
+            while (!turnOver) System.Threading.Thread.Sleep(1);
+            turnOver = false;
+            map.Player.RequestedMovement = Directions.None;
         }
     }
 }
