@@ -14,11 +14,12 @@ namespace Digger
         const int ElementSize = 32;
         Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         static List<CreatureAnimation> animations = new List<CreatureAnimation>();
+        Map map;
 
-
-        public DiggerWindow()
+        public DiggerWindow(Map map)
         {
-            ClientSize = new Size(ElementSize * Game.MapWidth, ElementSize * Game.MapHeight + ElementSize);
+            this.map = map;
+            ClientSize = new Size(ElementSize * map.Width, ElementSize * map.Height + ElementSize);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Text = "Digger";
             DoubleBuffered = true;
@@ -35,10 +36,10 @@ namespace Digger
         void Act()
         {
             animations.Clear();
-            for (int x = 0; x < Game.MapWidth; x++)
-                for (int y = 0; y < Game.MapHeight; y++)
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
                 {
-                    var creature = Game.Map[x, y];
+                    var creature = map[x, y];
                     if (creature == null) continue;
                     var command = creature.Act(x,y);
                     animations.Add(new CreatureAnimation
@@ -54,11 +55,10 @@ namespace Digger
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.TranslateTransform(0,ElementSize);
-            e.Graphics.FillRectangle(Brushes.Black,0,0,ElementSize*Game.MapWidth,ElementSize*Game.MapHeight);
+            e.Graphics.FillRectangle(Brushes.Black,0,0,ElementSize*map.Width,ElementSize*map.Height);
             foreach(var a in animations)
                 e.Graphics.DrawImage(bitmaps[a.Creature.GetImageFileName()],a.Location);
             e.Graphics.ResetTransform();
-            e.Graphics.DrawString(Game.Scores.ToString(), new Font("Arial", 16), Brushes.Green, 0, 0);
         }
 
         int tickCount = 0;
@@ -70,23 +70,23 @@ namespace Digger
                 e.Location = new Point(e.Location.X + 4*e.Command.DeltaX, e.Location.Y + 4*e.Command.DeltaY);
             if (tickCount==7)
             {
-                for (int x=0;x<Game.MapWidth;x++) for (int y=0;y<Game.MapHeight;y++) Game.Map[x,y]=null;
+                for (int x=0;x<map.Width;x++) for (int y=0;y<map.Height;y++) map[x,y]=null;
                 foreach(var e in animations)
                 {
                     var x=e.Location.X/32;
                     var y=e.Location.Y/32;
                     var nextCreature = e.Command.TransformTo == null ? e.Creature : e.Command.TransformTo;
-                    if (Game.Map[x, y] == null) Game.Map[x, y] = nextCreature;
+                    if (map[x, y] == null) map[x, y] = nextCreature;
                     else
                     {
-                        bool newDead = nextCreature.DeadInConflict(Game.Map[x, y]);
-                        bool oldDead = Game.Map[x, y].DeadInConflict(nextCreature);
+                        bool newDead = nextCreature.DeadInConflict(map[x, y]);
+                        bool oldDead = map[x, y].DeadInConflict(nextCreature);
                         if (newDead && oldDead)
-                            Game.Map[x, y] = null;
+                            map[x, y] = null;
                         else if (!newDead && oldDead)
-                            Game.Map[x, y] = nextCreature;
+                            map[x, y] = nextCreature;
                         else if (!newDead && !oldDead)
-                            throw new Exception(string.Format("Существа {0} и {1} претендуют на один и тот же участок карты", nextCreature.GetType().Name, Game.Map[x, y].GetType().Name));
+                            throw new Exception(string.Format("Существа {0} и {1} претендуют на один и тот же участок карты", nextCreature.GetType().Name, map[x, y].GetType().Name));
                     }
 
                 }

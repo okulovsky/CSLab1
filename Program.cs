@@ -12,8 +12,8 @@ namespace Digger
         [STAThread]
         static void Main()
         {
-            Game.CreateMap();
-            Application.Run(new DiggerWindow());
+            var map = Levels.TestLevel();
+            Application.Run(new DiggerWindow(map));
         }
     }
 }

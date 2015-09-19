@@ -7,28 +7,22 @@ using System.Windows.Forms;
 
 namespace Digger
 {
-    public class Game
+    public class Map
     {
 
-        public static ICreature[,] Map;
-        public static int MapWidth;
-        public static int MapHeight;
-        public static int Scores;
-        public static bool IsOver;
+        public ICreature[,] Elements;
+        public int Width { get { return Elements.GetLength(0); } }
+        public int Height { get { return Elements.GetLength(1); } }
 
-
-        public static void CreateMap()
+        public ICreature this[int x, int y]
         {
-            //TODO: Инициализируйте здесь карту
-            MapWidth = 20;
-            MapHeight = 20;
-            Map = new ICreature[MapWidth, MapHeight];
-            for (int x = 0; x < MapWidth; x++)
-                for (int y = 0; y < MapHeight; y++)
-                    Map[x, y] = new Terrain();
-            Map[0, 0] = new Player();
-
-            Map[1, 10] = new Sack();
+            get { return Elements[x, y]; }
+            set { Elements[x, y] = value; }
+        }
+        
+       public Map(int width, int height)
+        {
+            Elements = new ICreature[width, height];
         }
 
     }
