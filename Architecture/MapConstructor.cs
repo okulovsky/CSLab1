@@ -9,10 +9,17 @@ namespace Digger
     public class MapConstructor
     {
         Map map;
-        public MapConstructor(int width, int height, string description)
+        public MapConstructor(int width, int height)
         {
             map = new Map(width, height);
-            map.Description = description;
+        }
+
+        public MapConstructor Descriptions(string descFormat, string infoFormat, params object[] data)
+        {
+            map.Description = string.Format(descFormat, data);
+            if (infoFormat!=null)
+                map.MapInfo = string.Format(infoFormat, data);
+            return this;
         }
 
         public MapConstructor Frame()
@@ -62,8 +69,6 @@ namespace Digger
                         case Directions.Left: nx--; break;
                         case Directions.Right: nx++; break;
                     }
-                if (nx < 0 || nx >= map.Width) nx = currentX;
-                if (ny < 0 || ny >= map.Height) ny = currentY;
                 map[nx,ny]=null;
                 currentX=nx;
                 currentY=ny;
@@ -71,6 +76,11 @@ namespace Digger
             return this;
         }
 
+        public MapConstructor DoorHere()
+        {
+            map[currentX, currentY] = new Door();
+            return this;
+        }
         public Map Map { get { return map;  } }
     }
 }

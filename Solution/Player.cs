@@ -39,6 +39,11 @@ namespace Digger
                 map.Messages.Add("Вы расшиблись о стену");
                 map.GameOver = true;
             }
+            if (map[nx,ny] is Door)
+            {
+                map.Messages.Add("Вы прошли уровень");
+                map.GameOver = true;
+            }
 
 
 

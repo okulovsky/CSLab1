@@ -24,6 +24,8 @@ namespace Digger
 
         public string Description { get; set; }
 
+        public string MapInfo { get; set; }
+
         public bool GameOver { get; set; }
 
         public List<string> Messages { get; private set; }
@@ -33,6 +35,8 @@ namespace Digger
             get
             {
                 yield return Description;
+                if (MapInfo != null)
+                    yield return "MapInfo: " + MapInfo;
                 foreach (var e in Messages) yield return e;
             }
         }

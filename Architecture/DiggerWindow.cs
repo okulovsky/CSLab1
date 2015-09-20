@@ -9,6 +9,15 @@ using System.Windows.Forms;
 
 namespace Digger
 {
+
+    enum MovementRequest
+    {
+        No,
+        Given,
+        Taken,
+        Processed
+    }
+
 	public class DiggerWindow : Form
     {
         const int MessagesWidth = 200;
@@ -40,6 +49,13 @@ namespace Digger
 
         void Act()
         {
+            bool skip = false;
+            if (request == MovementRequest.No || request == MovementRequest.Processed)
+                skip = true;
+            else if (request == MovementRequest.Given)
+                request = MovementRequest.Taken;
+            else throw new Exception("Wrong request state "+request);
+
             animations.Clear();
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
@@ -47,7 +63,7 @@ namespace Digger
                     var creature = map[x, y];
                     if (creature == null) continue;
                     CreatureCommand command;
-                    if (!map.GameOver)
+                    if (!map.GameOver && !skip)
                         command = creature.Act(map, x, y);
                     else
                         command = new CreatureCommand { DeltaX = 0, DeltaY = 0, TransformTo = null };
@@ -113,19 +129,19 @@ namespace Digger
             if (tickCount == 8)
             {
                 tickCount = 0;
-                turnOver = true;
+                if (request == MovementRequest.Taken) request = MovementRequest.Processed;
             }
             Invalidate();
         }
 
-        bool turnOver = false;
+        MovementRequest request;
       
         public void Go(Directions direction)
         {
             map.Player.RequestedMovement = direction;
-            while (!turnOver) System.Threading.Thread.Sleep(1);
-            turnOver = false;
-            map.Player.RequestedMovement = Directions.None;
+            request = MovementRequest.Given;
+            while (request!= MovementRequest.Processed) System.Threading.Thread.Sleep(1);
+            request = MovementRequest.No;
         }
 
         public void Autocheck()
