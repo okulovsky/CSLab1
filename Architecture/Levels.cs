@@ -9,6 +9,12 @@ namespace Digger
     class Levels
     {
 
+        public static Map Level0()
+        {
+            var map = new MapConstructor(10, 3).Descriptions("Просто идите в направлении Right!", null).Frame().PlayFrom(1, 1);
+            map.Map[8, 1] = new Door();
+            return map.Map;
+        }
 
         public static Map Level1()
         {
@@ -97,6 +103,28 @@ namespace Digger
             map.DoorHere();
             return map.Map;
         }
+
+        public static Map Level6()
+        {
+            var data=new []
+            {
+                "  x     x   xxxx      xx      x    ",
+                "   x   x    x   x    x  x    xxx   ",
+                "    x x     x   x   x    x   xxx   ",
+                "     x      xxxx    xxxxxx    x    ",
+                "    x       x       x    x         ",
+                "   x        x       x    x    x    "
+            };
+            
+            var map = new MapConstructor(data[0].Length,data.Length).Descriptions("Вы прошли все уровни",null).Map;
+
+            for (int x=0;x<map.Width;x++)
+                for (int y=0;y<map.Height;y++)
+                    map[x,y]=data[y][x]==' '?null:new Brick();
+
+            return map;
+        }
+
 
 
 

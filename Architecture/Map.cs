@@ -14,6 +14,8 @@ namespace Digger
         public int Width { get { return Elements.GetLength(0); } }
         public int Height { get { return Elements.GetLength(1); } }
 
+        public int LevelNumber { get; set; }
+
         public ICreature this[int x, int y]
         {
             get { return Elements[x, y]; }

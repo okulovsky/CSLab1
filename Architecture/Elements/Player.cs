@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,7 @@ namespace Digger
             if (map[nx,ny] is Door)
             {
                 map.Messages.Add("Вы прошли уровень");
+                File.WriteAllText("level.txt", (map.LevelNumber + 1).ToString());
                 map.GameOver = true;
             }
 
