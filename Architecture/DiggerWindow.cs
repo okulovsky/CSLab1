@@ -86,7 +86,7 @@ namespace Digger
                 if (!bitmaps.ContainsKey(name))
                     Console.WriteLine();
                 var bmp=bitmaps[name];
-                e.Graphics.DrawImage(bmp,a.Location);
+                e.Graphics.DrawImage(bmp,new Rectangle(a.Location.X,a.Location.Y,ElementSize,ElementSize));
             }
                 
             e.Graphics.ResetTransform();

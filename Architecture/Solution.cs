@@ -41,9 +41,8 @@ namespace Digger
 
             var map = (Map)method.Invoke(null, new object[0]);
             map.LevelNumber=levelNumber;
-            MapInfo = map.MapInfo;
             wnd = new DiggerWindow(map);
-            new Action<int>(Solution.Play).BeginInvoke(levelNumber, null, null);
+            new Action<int,string>(Solution.Play).BeginInvoke(levelNumber, map.MapInfo, null, null);
             Application.Run(wnd);
         }
     }

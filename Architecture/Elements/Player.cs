@@ -10,6 +10,8 @@ namespace Digger
     public class Player : ICreature
     {
         public Directions RequestedMovement { get; set; }
+
+       public  bool SuccessfulMovement { get; set; }
         
         public string GetImageFileName()
         {
@@ -23,6 +25,7 @@ namespace Digger
 
         public CreatureCommand Act(Map map, int x, int y)
         {
+            SuccessfulMovement = true;
             int nx=x;
             int ny=y;
             switch(RequestedMovement)
@@ -39,12 +42,19 @@ namespace Digger
             {
                 map.Messages.Add("Вы расшиблись о стену");
                 map.GameOver = true;
+                SuccessfulMovement = false;
             }
             if (map[nx,ny] is Door)
             {
                 map.Messages.Add("Вы прошли уровень");
                 File.WriteAllText("level.txt", (map.LevelNumber + 1).ToString());
                 map.GameOver = true;
+            }
+            if (map[nx,ny] is Wood)
+            {
+                SuccessfulMovement = false;
+                nx = x;
+                ny = y;
             }
 
 

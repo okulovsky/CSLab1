@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Architecture\CreatureCommand.cs" />
+    <Compile Include="Architecture\Elements\Wood.cs" />
     <Compile Include="Architecture\Map.cs" />
     <Compile Include="Architecture\ICreature.cs" />
     <Compile Include="Architecture\Levels.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Architecture\Elements\Player.cs" />
     <Compile Include="Architecture\Elements\Door.cs" />
-    <Compile Include="Architecture\Elements\Terrain.cs" />
+    <Compile Include="Architecture\Elements\Brick.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

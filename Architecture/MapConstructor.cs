@@ -12,6 +12,9 @@ namespace Digger
         public MapConstructor(int width, int height)
         {
             map = new Map(width, height);
+            this.currentX = 1;
+            this.currentY = 1;
+            map[currentX, currentY] = map.Player;
         }
 
         public MapConstructor Descriptions(string descFormat, string infoFormat, params object[] data)
@@ -37,24 +40,19 @@ namespace Digger
             return this;
         }
 
-        public MapConstructor Fill()
+        public MapConstructor Fill<T>()
+            where T : ICreature, new()
         {
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
-                    map[x, y] = new Brick();
+                    map[x, y] = new T();
             return this;
         }
 
         int currentX;
         int currentY;
 
-        public MapConstructor PlayFrom(int x, int y)
-        {
-            this.currentX=x;
-            this.currentY=y;
-            map[currentX,currentY]=map.Player;
-            return this;
-        }
+       
         
         public MapConstructor Dig(Directions dir, int count)
         {

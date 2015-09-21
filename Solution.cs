@@ -17,15 +17,14 @@ namespace Digger
 
     static partial class Solution
     {
-        static int RequestLevel = -1;
-        static string MapInfo;
+        static int RequestLevel = 11;
 
         static void Level0()
         {
             Go(Directions.Right);
         }
         
-        static void Play(int levelNumber)
+        static void Play(int levelNumber, string mapInfo)
         {
             switch(levelNumber)
             {
