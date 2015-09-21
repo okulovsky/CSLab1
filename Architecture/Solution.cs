@@ -12,9 +12,9 @@ namespace Digger
     {
         static DiggerWindow wnd;
 
-        static void Go(Directions direction)
+        static bool Go(Directions direction)
         {
-            wnd.Go(direction);
+            return wnd.Go(direction);
         }
 
         [STAThread]

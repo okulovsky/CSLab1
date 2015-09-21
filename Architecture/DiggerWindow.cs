@@ -136,12 +136,13 @@ namespace Digger
 
         MovementRequest request;
       
-        public void Go(Directions direction)
+        public bool Go(Directions direction)
         {
             map.Player.RequestedMovement = direction;
             request = MovementRequest.Given;
             while (request!= MovementRequest.Processed) System.Threading.Thread.Sleep(1);
             request = MovementRequest.No;
+            return map.Player.SuccessfulMovement;
         }
 
         public void Autocheck()

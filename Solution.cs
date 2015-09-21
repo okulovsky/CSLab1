@@ -30,6 +30,12 @@ namespace Digger
             {
                 case 0: Level0(); return;
             }
+
+            var dir = Directions.Right;
+            while(true)
+            {
+                if (!Go(dir)) dir = (Directions)(((int)dir + 1) % 4);
+            }
         }
     }
 }

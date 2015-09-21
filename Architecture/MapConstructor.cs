@@ -45,7 +45,7 @@ namespace Digger
         {
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
-                    map[x, y] = new T();
+                    if (map[x,y]==null) map[x, y] = new T();
             return this;
         }
 
