@@ -217,27 +217,74 @@ namespace Digger
             return map.Map;
         }
 
-
-        //public static Map Level7()
-        //{
-        //    var data=new []
-        //    {
-        //        "  x     x   xxxx      xx      x    ",
-        //        "   x   x    x   x    x  x    xxx   ",
-        //        "    x x     x   x   x    x   xxx   ",
-        //        "     x      xxxx    xxxxxx    x    ",
-        //        "    x       x       x    x         ",
-        //        "   x        x       x    x    x    "
-        //    };
+        public static Map Level12()
+        {
             
-        //    var map = new MapConstructor(data[0].Length,data.Length).Descriptions("Вы прошли все уровни",null).Map;
+            var data = new[] { 
+                "                              ",
+                " XXXXXXXXXXXXXXXXXX XXXXXXX X ",
+                "  X   X      X    X X       X ",
+                "  X X X XXXX XXXX X X X XXX X ",
+                "  X XXX X X  X    X X X X   X ",
+                "  X     X X  X XXXX XXX XXXXX ",
+                " XXXXXXXX X       X X X X X X ",
+                "          X  X XXXXXX XXX X X ",
+                "  XXXXXXXXX  X            X X ",
+                "  X     X    XXXXXXXXXXXXXX X ",
+                "  X XXXXX                 X X ",
+                "  X   X X   XXXXXXXXXXXX  X X ",
+                "  X   X X           X  XXXX X ",
+                "  X       X                 X  ",
+                "  XXXXXXXXXXXXXXXXXXXXXXXXX X ",
+                "                              ",
+            };
+            var map = new MapConstructor(data[0].Length, data.Length).Descriptions("А теперь выберетесь из настоящего лабиринта. Это просто - нужно всегда поворачивать в одну и ту же сторону...", null).Map;
 
-        //    for (int x=0;x<map.Width;x++)
-        //        for (int y=0;y<map.Height;y++)
-        //            map[x,y]=data[y][x]==' '?null:new Brick();
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                    map[x, y] = data[y][x] == ' ' ? new Wood() : null;
+            map[1, 1] = map.Player;
+            map[map.Width - 2, map.Height - 2] = new Door();
+            return map;
+        }
 
-        //    return map;
-        //}
+        //public static Map Level12()
+        //{
+        //    var map = new MapConstructor(19, 12)
+        //        .Descriptions("На первом перекрестке поверните направо, на втором - пройдите прямо, на третьем - налево", null)
+        //        .Fill<Wood>()
+        //        .Dig(Directions.Right, 14)
+        //        .Dig(Directions.Down, 4)
+        //        .CrossHere(2)
+        //        .Dig(Directions.Left, 6)
+        //        .CrossHere(2)
+        //        .Dig(Directions.Left, 6)
+        //        .CrossHere(2)
+        //        .Dig(Directions.Down, 2)
+        //        .DoorHere();
+        //    return map.Map;
+
+        // }
+        public static Map Level13()
+        {
+            var data=new []
+            {
+                "  x     x   xxxx      xx      x    ",
+                "   x   x    x   x    x  x    xxx   ",
+                "    x x     x   x   x    x   xxx   ",
+                "     x      xxxx    xxxxxx    x    ",
+                "    x       x       x    x         ",
+                "   x        x       x    x    x    "
+            };
+            
+            var map = new MapConstructor(data[0].Length,data.Length).Descriptions("Вы прошли все уровни",null).Map;
+
+            for (int x=0;x<map.Width;x++)
+                for (int y=0;y<map.Height;y++)
+                    map[x,y]=data[y][x]==' '?null:new Brick();
+            map[1, 1] = new Player();
+            return map;
+        }
 
 
 

@@ -17,7 +17,7 @@ namespace Digger
 
     static partial class Solution
     {
-        static int RequestLevel = 11;
+        static int RequestLevel = 13;
 
         static void Level0()
         {

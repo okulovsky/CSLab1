@@ -79,6 +79,17 @@ namespace Digger
             map[currentX, currentY] = new Door();
             return this;
         }
+
+        public MapConstructor CrossHere(int size=1)
+        {
+            return
+            Dig(Directions.Right, size).
+            Dig(Directions.Left, 2 * size).
+            Dig(Directions.Right, size).
+            Dig(Directions.Up, size).
+            Dig(Directions.Down, 2 * size).
+            Dig(Directions.Up, size);
+        }
         public Map Map { get { return map;  } }
     }
 }
