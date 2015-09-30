@@ -17,6 +17,8 @@ namespace Digger
 
     static partial class Solution
     {
+		static int RequestLevel = -1; //вставьте номер уровня для прямого доступа к нему
+
         static void Level0()
         {
             Go(Directions.Right);

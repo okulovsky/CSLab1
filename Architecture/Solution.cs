@@ -10,6 +10,8 @@ namespace Digger
 {
     partial class Solution
     {
+
+
         static DiggerWindow wnd;
 
         static bool Go(Directions direction)
