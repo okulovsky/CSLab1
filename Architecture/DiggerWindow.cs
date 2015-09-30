@@ -32,7 +32,7 @@ namespace Digger
         public DiggerWindow(Map map)
         {
             this.map = map;
-            ClientSize = new Size(ElementSize * map.Width + MessagesWidth, ElementSize * map.Height);
+            ClientSize = new Size(ElementSize * map.Width + MessagesWidth, Math.Max(ElementSize * map.Height,300));
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Text = "Digger";
             DoubleBuffered = true;
