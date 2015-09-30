@@ -17,8 +17,6 @@ namespace Digger
 
     static partial class Solution
     {
-        static int RequestLevel = 13;
-
         static void Level0()
         {
             Go(Directions.Right);
@@ -29,12 +27,6 @@ namespace Digger
             switch(levelNumber)
             {
                 case 0: Level0(); return;
-            }
-
-            var dir = Directions.Right;
-            while(true)
-            {
-                if (!Go(dir)) dir = (Directions)(((int)dir + 1) % 4);
             }
         }
     }
