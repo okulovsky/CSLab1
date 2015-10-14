@@ -88,27 +88,12 @@ namespace Digger
             return map.Map;
         }
 
+
+
         public static Map Level6()
         {
             var map = new MapConstructor(13, 11)
-                .Descriptions("А если так?", "Levels 5 -2 7 -5")
-                .Fill<Brick>()
-                .Dig(Directions.Right, 5)
-                .Dig(Directions.Down, 2)
-                .Dig(Directions.Left, 2)
-                .Dig(Directions.Down, 2)
-                .Dig(Directions.Right, 7)
-                .Dig(Directions.Down, 2)
-                .Dig(Directions.Left, 5)
-                .Dig(Directions.Down, 2)
-                .DoorHere();
-            return map.Map;
-        }
-
-        public static Map Level7()
-        {
-            var map = new MapConstructor(13, 11)
-                .Descriptions("Не нашли ли вы закономерность, которой на самом деле нет?", "Levels 10 -2 -2 -5")
+                .Descriptions("А если так?", "Levels 10 -2 -2 -5")
                 .Fill<Brick>()
                 .Dig(Directions.Right, 10)
                 .Dig(Directions.Down, 2)
@@ -124,11 +109,11 @@ namespace Digger
 
 
 
-        public static Map Level8()
+        public static Map Level7()
         {
             var map = new MapConstructor(15, 6);
             map = map
-                 .Descriptions("Попробуйте сразу найти взаимосвязь между размерами карты и кодом", "Size {0} {1}", map.Map.Width, map.Map.Height)
+                 .Descriptions("Далее мы будем проходить лабиринты со ступеньками. Траектория всегда одинаковая: влево-вниз-влево-вниз", "Size {0} {1}", map.Map.Width, map.Map.Height)
                  .Fill<Brick>()
                 ;
 
@@ -147,11 +132,57 @@ namespace Digger
             return map.Map;
         }
 
-        public static Map Level9()
+		public static Map Level8()
+		{
+			var map = new MapConstructor(12, 6);
+			map = map
+				 .Descriptions("А если так?", "Size {0} {1}", map.Map.Width, map.Map.Height)
+				 .Fill<Brick>()
+				;
+
+			for (int i = 0; i < 3; i++)
+				map = map.Dig(Directions.Right, 3).Dig(Directions.Down, 1);
+
+			map.Map.Solution = wnd =>
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					for (int j = 0; j < 3; j++) wnd.Go(Directions.Right);
+					for (int j = 0; j < 1; j++) wnd.Go(Directions.Down);
+				}
+			};
+			map.DoorHere();
+			return map.Map;
+		}
+
+		public static Map Level9()
+		{
+			var map = new MapConstructor(6, 12);
+			map = map
+				 .Descriptions("А так?", "Size {0} {1}", map.Map.Width, map.Map.Height)
+				 .Fill<Brick>()
+				;
+
+			for (int i = 0; i < 3; i++)
+				map = map.Dig(Directions.Right, 1).Dig(Directions.Down, 3);
+
+			map.Map.Solution = wnd =>
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					for (int j = 0; j < 1; j++) wnd.Go(Directions.Right);
+					for (int j = 0; j < 3; j++) wnd.Go(Directions.Down);
+				}
+			};
+			map.DoorHere();
+			return map.Map;
+		}
+
+        public static Map Level10()
         {
             var map = new MapConstructor(18, 13);
             map=map
-                .Descriptions("Возможно, закономерность сложнее, чем кажется", "Size {0} {1}", map.Map.Width,map.Map.Height)
+                .Descriptions("И наконец, общий случай", "Size {0} {1}", map.Map.Width,map.Map.Height)
                 .Fill<Brick>()
                 ;
             for (int i = 0; i < 5; i++)
@@ -169,31 +200,32 @@ namespace Digger
             return map.Map;
         }
 
-        public static Map Level10()
+        public static Map Level11()
         {
             var map = new MapConstructor(21,16);
-            map = map
-                .Descriptions("Найдите общее решение для произвольного лабиринта такой формы", "Size {0} {1}", map.Map.Width, map.Map.Height)
-                .Fill<Brick>()
-                .Dig(Directions.Right, 18)
-                .Dig(Directions.Down, 13)
-                .Dig(Directions.Left, 18)
-                .Dig(Directions.Up, 11)
-                .Dig(Directions.Right, 16)
-                .Dig(Directions.Down, 9)
-                .Dig(Directions.Left, 14)
-                .Dig(Directions.Up, 7)
-                .Dig(Directions.Right, 12)  
-                .Dig(Directions.Down, 5)
-                .Dig(Directions.Left, 10)
-                .Dig(Directions.Up, 3)
-                .Dig(Directions.Right, 8)
-                .Dig(Directions.Down, 1);
+			map = map
+				.Descriptions("Найдите общее решение для произвольного лабиринта такой формы", "Size {0} {1}", map.Map.Width, map.Map.Height)
+				.Fill<Brick>()
+				.Dig(Directions.Right, 18)
+				.Dig(Directions.Down, 13)
+				.Dig(Directions.Left, 18)
+				.Dig(Directions.Up, 11)
+				.Dig(Directions.Right, 16)
+				.Dig(Directions.Down, 9)
+				.Dig(Directions.Left, 14)
+				.Dig(Directions.Up, 7)
+				.Dig(Directions.Right, 12)
+				.Dig(Directions.Down, 5)
+				.Dig(Directions.Left, 10)
+				.Dig(Directions.Up, 3)
+				.Dig(Directions.Right, 8)
+				.Dig(Directions.Down, 1)
+				.DoorHere();
 
             return map.Map;
         }
 
-        public static Map Level11()
+        public static Map Level12()
         {
             var map = new MapConstructor(18, 14)
                 .Descriptions("В деревянные стены безопасно врезаться. Метод Go возвращает false, если перемещение сделать не получилось. В этом лабиринте надо поворачивать направо, упершись в стену", null)
@@ -217,7 +249,7 @@ namespace Digger
             return map.Map;
         }
 
-        public static Map Level12()
+        public static Map Level13()
         {
             
             var data = new[] { 
@@ -248,24 +280,7 @@ namespace Digger
             return map;
         }
 
-        //public static Map Level12()
-        //{
-        //    var map = new MapConstructor(19, 12)
-        //        .Descriptions("На первом перекрестке поверните направо, на втором - пройдите прямо, на третьем - налево", null)
-        //        .Fill<Wood>()
-        //        .Dig(Directions.Right, 14)
-        //        .Dig(Directions.Down, 4)
-        //        .CrossHere(2)
-        //        .Dig(Directions.Left, 6)
-        //        .CrossHere(2)
-        //        .Dig(Directions.Left, 6)
-        //        .CrossHere(2)
-        //        .Dig(Directions.Down, 2)
-        //        .DoorHere();
-        //    return map.Map;
-
-        // }
-        public static Map Level13()
+        public static Map Level14()
         {
             var data=new []
             {
